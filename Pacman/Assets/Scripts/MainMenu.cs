@@ -7,6 +7,34 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene(1);
+    }
+    public void ShowScores()
+    {
+        SceneManager.LoadScene(2);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    public void EasyDiff()
+    {
+        SceneManager.LoadScene(5);
+    }
+    public void MidDiff()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void HighDiff()
+    {
+        SceneManager.LoadScene(4);
+    }
+    public void ChooseDiff()
+    {
+        SceneManager.LoadScene(6);
+    }
+    public void BackButton()
+    {
+        SceneManager.LoadScene(0);
     }
 }

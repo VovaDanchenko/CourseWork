@@ -9,7 +9,6 @@ public class Pacdot : MonoBehaviour
     {
         if (co.name == "pacman") {
             Score.scoreValue+=10;
-
             Destroy(gameObject);
             
         }

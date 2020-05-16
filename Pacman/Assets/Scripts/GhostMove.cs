@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GhostMove : MonoBehaviour
 {
@@ -29,6 +31,10 @@ public class GhostMove : MonoBehaviour
     void OnTriggerEnter2D(Collider2D co)
     {
         if (co.name == "pacman")
+        {
             Destroy(co.gameObject);
+            SceneManager.LoadScene(3);
+        }
+
     }
 }

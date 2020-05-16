@@ -4,10 +4,11 @@ using UnityEngine;
 using System;
 using System.Data;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Mono.Data.Sqlite;
 public class HighscoreManager : MonoBehaviour   
 {
-    // Start is called before the first frame update
+   
     private string connectionString;
     private List<Highscore> highScores = new List<Highscore>();
     public GameObject scorePrefab;
@@ -19,18 +20,28 @@ public class HighscoreManager : MonoBehaviour
     
     void Start()
     {
-        connectionString = "Data Source=" + Application.dataPath + "/HighscoreTable/HighscoreDB.db";
-        //insertScore("Oleg",1300);
+        connectionString = "Data Source=" + Application.dataPath + "/HighscoreDB.db";
+        CreateTable();
         DeleteExtraScores();
         showScores();
+        insertScore("test", 0);
+        insertScore("test", 0);
+        insertScore("test", 0);
+        insertScore("test", 0);
+        insertScore("test", 0);
+        insertScore("test", 0);
+        insertScore("test", 0);
+        insertScore("test", 0);
+        insertScore("test", 0);
+        insertScore("test", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)||Score.scoreValue>highScores[10].Score)
         {
-         nameDialog.SetActive(!nameDialog.activeSelf);
+         nameDialog.SetActive(nameDialog);
         }
     }
 
@@ -47,8 +58,7 @@ public class HighscoreManager : MonoBehaviour
                 hsCount--; 
             }
         }
-        if (hsCount < saveScores)
-        {
+       
             using (IDbConnection dbConnection = new SqliteConnection(connectionString))
             {
                 dbConnection.Open();
@@ -62,7 +72,7 @@ public class HighscoreManager : MonoBehaviour
 
                 }
             }
-        }
+        
     }
 
 
@@ -159,11 +169,42 @@ public class HighscoreManager : MonoBehaviour
     {
         if (enterName.text != string.Empty)
         {
-            int score = UnityEngine.Random.Range(1000, 1500);
+            int score = Score.scoreValue;
             insertScore(enterName.text, score);
             enterName.text = string.Empty;
+            Score.scoreValue = 0;
             showScores();
-            
+            nameDialog.SetActive(!nameDialog.activeSelf);
+
         }
+    }
+
+    private void CreateTable()
+    {
+
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+            dbConnection.Open();
+            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            {
+                string sqlQuery = String.Format("CREATE TABLE IF NOT EXISTS Highscore ( PlayerID  INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,Name  TEXT,Score INTEGER)");
+                dbCmd.CommandText = sqlQuery;
+                dbCmd.ExecuteScalar();
+                dbConnection.Close();
+
+
+            }
+        }
+    }
+    
+
+
+    public void BackButton()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(1);
     }
 }

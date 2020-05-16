@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/HighscoreTable/HighScoreTable.unity
+- path: Assets/Scenes/GameFast.unity
   isLoaded: 1
   isActive: 1
